@@ -6,7 +6,7 @@ import pdb
 
 def run_rnashape(sequence):
     #
-    cmd = 'echo "%s" | RNAshapes -t %d -c %d -# %d' % (sequence,5, 10, 1)
+    cmd = 'echo "%s" | ./RNAshapes -t %d -c %d -# %d' % (sequence,5, 10, 1)
     out = sp.check_output(cmd, shell=True)
     text = out.strip().split('\n')
     seq_info = text[0]

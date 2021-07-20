@@ -158,7 +158,10 @@ def read_structure(seq_file, path):
     else:
         fw = None
         struct_exist = True
-        struct_dict = read_rnashape(path + '/structure.gz')
+        if path[-1] == '/':
+            struct_dict = read_rnashape(path + 'structure.gz')
+        else:
+            struct_dict = read_rnashape(path + '/structure.gz')
         #pdb.set_trace()
     seq = ''
     with gzip.open(seq_file, 'r') as fp:
