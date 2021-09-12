@@ -51,7 +51,7 @@ import scipy.stats as stats
 from seq_motifs import *
 import structure_motifs
 from keras import backend as K
-from rnashape_structure import run_rnashape
+from rnashape_structure_without_memory_issue import run_rnashape
 import argparse
 
 def calculate_performace(test_num, pred_y,  labels):
