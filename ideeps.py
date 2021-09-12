@@ -1039,13 +1039,14 @@ def run_predict():
 
     fw.close()
     
-def load_data_file(inputfile, seq = True, onlytest = False):
+def load_data_file(inputfile, seq = True, onlytest = False, path=None):
     """
         Load data matrices from the specified folder.
     """
-    path = os.path.dirname(inputfile)
-    # if len(path):
-        # path = './'
+    if path is None: # path should be model_dir to enable parallelism
+        path = os.path.dirname(inputfile)
+        if len(path):
+            path = './'
     data = dict()
     if seq: 
         tmp = []
@@ -1076,7 +1077,7 @@ def run_network_new(model, total_hid, training, y, validation, val_y, batch_size
     return model    
     
 def train_ideeps(data_file, model_dir, batch_size= 50, nb_epoch = 30):
-    training_data = load_data_file(data_file)
+    training_data = load_data_file(data_file, path=model_dir)
     
     seq_hid = 16
     struct_hid = 16
@@ -1112,7 +1113,7 @@ def train_ideeps(data_file, model_dir, batch_size= 50, nb_epoch = 30):
     model.save(os.path.join(model_dir,'model.pkl'))
 
 def test_ideeps(data_file, model_dir, outfile='prediction.txt', onlytest = True):
-    test_data = load_data_file(data_file, onlytest= onlytest)
+    test_data = load_data_file(data_file, onlytest= onlytest, path=model_dir)
     print len(test_data)
     if not onlytest:
         true_y = test_data["Y"].copy()
@@ -1320,7 +1321,7 @@ def get_seq_structure_motif(model, testing, seqs, index = 0, out_dir = 'motifs/s
         get_structure_motif_fig_new(filter_weights, filter_outs, out_dir, seqs, sample_i)
 
 def identify_motif(data_file, model_dir = 'models/', motif_dir = 'motifs/', onlytest = True):
-    test_data = load_data_file(data_file, onlytest= onlytest)
+    test_data = load_data_file(data_file, onlytest= onlytest, path=model_dir)
     seqs = read_seq_new(data_file)
     model = load_model(os.path.join(model_dir,'model.pkl')) 
     
