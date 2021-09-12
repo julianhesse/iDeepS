@@ -153,6 +153,8 @@ def read_structure(seq_file, path):
     seq_list = []
     structure_list = []
     struct_exist = False
+    print('Path:', path)
+    print('Path-full:', path + '/structure.gz')
     if not os.path.exists(path + '/structure.gz'):
         fw = gzip.open(path + '/structure.gz', 'w')
     else:
@@ -262,6 +264,7 @@ def load_data(path, seq = True, oli = False):
 
     data = dict()
     if seq: 
+        print('load_data')
         tmp = []
         tmp.append(read_seq(os.path.join(path, 'sequences.fa.gz')))
         seq_onehot, structure = read_structure(os.path.join(path, 'sequences.fa.gz'), path)
@@ -1043,11 +1046,14 @@ def load_data_file(inputfile, seq = True, onlytest = False):
     """
         Load data matrices from the specified folder.
     """
+    print('load_data_file', 'inputfile', inputfile)
     path = os.path.dirname(inputfile)
-    if len(path):
-        path = './'
+    print('load_data_file', 'path:', path)
+    # if len(path):
+        # path = './'
     data = dict()
     if seq: 
+        print('load_data_file')
         tmp = []
         tmp.append(read_seq(inputfile))
         seq_onehot, structure = read_structure(inputfile, path)
