@@ -1077,7 +1077,9 @@ def run_network_new(model, total_hid, training, y, validation, val_y, batch_size
     return model    
     
 def train_ideeps(data_file, model_dir, batch_size= 50, nb_epoch = 30):
+    print 'loading training data'
     training_data = load_data_file(data_file, path=model_dir)
+    print 'finished loading'
     
     seq_hid = 16
     struct_hid = 16
